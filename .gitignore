@@ -1,0 +1,7 @@
+venv/
+*.epub
+*.log
+__pycache__/
+*.pyc
+._*
+ziwzse3J
