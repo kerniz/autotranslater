@@ -6,3 +6,6 @@ __pycache__/
 ._*
 ziwzse3J
 *.html
+*.egg-info/
+dist/
+build/
