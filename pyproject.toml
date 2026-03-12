@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "autotranslater"
-version = "0.1.0"
+version = "0.2.0"
 description = "AI 기반 문서 자동 번역 도구 (Ollama)"
 readme = "README.md"
 requires-python = ">=3.9"
