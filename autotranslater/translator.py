@@ -17,7 +17,7 @@ import ebooklib
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_MODEL = os.environ.get("AUTOTRANSLATE_MODEL", "gemma3:27b")
+DEFAULT_MODEL = os.environ.get("AUTOTRANSLATE_MODEL", "translategemma:27b")
 DEFAULT_HOST = os.environ.get("AUTOTRANSLATE_HOST", "kerniz3.mooo.com")
 DEFAULT_TIMEOUT = int(os.environ.get("AUTOTRANSLATE_TIMEOUT", "180"))
 DEFAULT_THREADS = int(os.environ.get("AUTOTRANSLATE_THREADS", "5"))
@@ -109,18 +109,18 @@ class Translator:
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _cache_key(text: str, model: str) -> str:
-        return hashlib.sha256(f"{model}:{text}".encode()).hexdigest()[:32]
+    def _cache_key(text: str, model: str, lang: str = "") -> str:
+        return hashlib.sha256(f"{model}:{lang}:{text}".encode()).hexdigest()[:32]
 
     def _get_cached(self, text: str) -> Optional[str]:
-        path = os.path.join(CACHE_DIR, f"{self._cache_key(text, self.model)}.txt")
+        path = os.path.join(CACHE_DIR, f"{self._cache_key(text, self.model, self.target_lang)}.txt")
         if os.path.exists(path):
             with open(path, "r", encoding="utf-8") as f:
                 return f.read()
         return None
 
     def _save_cache(self, text: str, translated: str):
-        path = os.path.join(CACHE_DIR, f"{self._cache_key(text, self.model)}.txt")
+        path = os.path.join(CACHE_DIR, f"{self._cache_key(text, self.model, self.target_lang)}.txt")
         with open(path, "w", encoding="utf-8") as f:
             f.write(translated)
 
